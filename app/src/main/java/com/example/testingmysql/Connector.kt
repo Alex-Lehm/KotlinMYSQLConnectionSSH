@@ -11,9 +11,9 @@ import java.sql.SQLException
  */
 object Connector {
 
-    val dbPort: Int = 3306
-    val localPort: Int = 1111
-    val sshPort: Int = 22
+    val dbPort: Int = 3306 // the port hosting the DB
+    val localPort: Int = 1111 // the local port (random) to forward the connection to
+    val sshPort: Int = 22 // the port to ssh into
 
     // Your SSH username and password - DO NOT commit these changes.
     // TODO: Consider adding `Connector.kt` to .gitignore
@@ -28,8 +28,13 @@ object Connector {
 
     val dbHost: String = "cs-db.ncl.ac.uk"
     val sshHost: String = "linux.cs.ncl.ac.uk"
+
+    // this will be the new db address to connect to
     val localDB: String = "jdbc:mysql://localhost:$localPort/$dbName"
 
+    /**
+     * Creating the SSH session then port-forwarding to a local port
+     */
     private fun createSSHSession(): Session {
         var sshSession: Session? = null
         sshSession = JSch().getSession(sshUsername, sshHost, sshPort)
