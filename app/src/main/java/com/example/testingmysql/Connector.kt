@@ -2,8 +2,10 @@ package com.example.testingmysql
 
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
+import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.sql.Statement
 
 /**
  * Connector class to create a database connection through an SSH tunnel.
@@ -11,26 +13,26 @@ import java.sql.SQLException
  */
 object Connector {
 
-    val dbPort: Int = 3306 // the port hosting the DB
-    val localPort: Int = 1111 // the local port (random) to forward the connection to
-    val sshPort: Int = 22 // the port to ssh into
+    private const val dbPort: Int = 3306 // the port hosting the DB
+    private const val localPort: Int = 1111 // the local port (random) to forward the connection to
+    private const val sshPort: Int = 22 // the port to ssh into
 
     // Your SSH username and password - DO NOT commit these changes.
     // TODO: Consider adding `Connector.kt` to .gitignore
-    val sshUsername: String = ""
-    val sshPassword: String = ""
+    private const val sshUsername: String = ""
+    private const val sshPassword: String = ""
 
-    val dbName: String = "csc2033_team24"
-    val dbUsername: String = "csc2033_team24"
+    private const val dbName: String = "csc2033_team24"
+    private const val dbUsername: String = "csc2033_team24"
 
     // Your database password
-    val dbPassword: String = ""
+    private const val dbPassword: String = ""
 
-    val dbHost: String = "cs-db.ncl.ac.uk"
-    val sshHost: String = "linux.cs.ncl.ac.uk"
+    private const val dbHost: String = "cs-db.ncl.ac.uk"
+    private const val sshHost: String = "linux.cs.ncl.ac.uk"
 
     // this will be the new db address to connect to
-    val localDB: String = "jdbc:mysql://localhost:$localPort/$dbName"
+    private const val localDB: String = "jdbc:mysql://localhost:$localPort/$dbName"
 
     /**
      * Creating the SSH session then port-forwarding to a local port
